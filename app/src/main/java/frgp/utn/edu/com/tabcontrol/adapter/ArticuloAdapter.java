@@ -16,7 +16,7 @@ import frgp.utn.edu.com.tabcontrol.clases.Articulo;
 public class ArticuloAdapter extends ArrayAdapter<Articulo> {
 
     public ArticuloAdapter(Context context, List<Articulo> objetos) {
-        super(context, R.layout.activity_main, objetos); // test
+        super(context, R.layout.list_template, objetos);
     }
 
     @Override

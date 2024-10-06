@@ -1,34 +1,45 @@
 package frgp.utn.edu.com.tabcontrol;
 
 import android.os.Bundle;
-
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
-import androidx.activity.EdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+import frgp.utn.edu.com.tabcontrol.adapter.ViewPageAdapter;
 import frgp.utn.edu.com.tabcontrol.conexion.DataMainActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
     private ListView lvClientes;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lvClientes = (ListView) this.findViewById(R.id.lvClientes);
-        DataMainActivity dataMainActivity = new DataMainActivity(lvClientes, this);
-        dataMainActivity.fetchData();
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        ViewPager2 viewPager = findViewById(R.id.viewPager);
 
+        ViewPageAdapter adapter = new ViewPageAdapter(this);
+        viewPager.setAdapter(adapter);
+
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> {
+                    switch (position) {
+                        case 0:
+                            tab.setText("ALTA");
+                            break;
+                        case 1:
+                            tab.setText("MODIFICACION");
+                            break;
+                        case 2:
+                            tab.setText("LISTADO");
+                            break;
+                    }
+                }).attach();
     }
-
 
 }
