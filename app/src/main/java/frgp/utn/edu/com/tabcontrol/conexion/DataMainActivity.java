@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.ListView;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -57,7 +58,6 @@ public class DataMainActivity {
                 Toast.makeText(context, "Hay un problema", Toast.LENGTH_SHORT).show();
             }
 
-            // Actualiza la UI en el hilo principal
             new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
 
                 ArticuloAdapter adapter = new ArticuloAdapter(context, listaArticulo);
@@ -66,4 +66,46 @@ public class DataMainActivity {
             });
         });
     }
+
+    public void agregarArticulo(int id, String nombre, int stock, int categoriaId) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            boolean success = false;
+
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection(DataDB.urlMySQL, DataDB.user, DataDB.pass);
+
+                String query = "INSERT INTO articulo (id, nombre, stock, idCategoria) VALUES (?, ?, ?, ?)";
+                PreparedStatement pst = con.prepareStatement(query);
+                pst.setInt(1, id);
+                pst.setString(2, nombre);
+                pst.setInt(3, stock);
+                pst.setInt(4, categoriaId);
+                int rowsAffected = pst.executeUpdate();
+
+                success = rowsAffected > 0;
+
+                pst.close();
+                con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
+                    Toast.makeText(context, "Error al agregar artículo", Toast.LENGTH_SHORT).show();
+                });
+                return;
+            }
+
+            boolean finalSuccess = success;
+            new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
+                if (finalSuccess) {
+                    Toast.makeText(context, "Artículo agregado exitosamente", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Error al agregar artículo", Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+    }
+
+
 }

@@ -6,6 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import frgp.utn.edu.com.tabcontrol.clases.AltaFragment;
 import frgp.utn.edu.com.tabcontrol.clases.ListadoFragment;
+import frgp.utn.edu.com.tabcontrol.clases.ModificarFragment;
 
 public class ViewPageAdapter extends FragmentStateAdapter {
 
@@ -20,7 +21,7 @@ public class ViewPageAdapter extends FragmentStateAdapter {
             case 0:
                 return new AltaFragment();
             case 1:
-                return new AltaFragment();
+                return new ModificarFragment();
             case 2:
                 return new ListadoFragment();
             default:

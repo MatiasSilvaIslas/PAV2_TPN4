@@ -16,12 +16,10 @@ import frgp.utn.edu.com.tabcontrol.conexion.DataMainActivity;
 
 public class ListadoFragment extends Fragment {
 
-    private ListView lvArticulo;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_template, container, false);
-        lvArticulo = view.findViewById(R.id.lvArticulo);
+        ListView lvArticulo = view.findViewById(R.id.lvArticulo);
         DataMainActivity dataMainActivity = new DataMainActivity(lvArticulo, requireActivity());
         dataMainActivity.fetchData();
 
