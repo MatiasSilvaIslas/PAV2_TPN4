@@ -16,6 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import frgp.utn.edu.com.tabcontrol.R;
 import frgp.utn.edu.com.tabcontrol.conexion.DataMainActivity;
@@ -55,7 +57,7 @@ public class AltaFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                categoriaId = -1;
+                categoriaId = 0;
             }
         });
 
@@ -63,16 +65,18 @@ public class AltaFragment extends Fragment {
     }
 
     private void cargarCategorias() {
-        listaCategorias = new ArrayList<>();
-        listaCategorias.add(new Categoria(1, "Categoría 1"));
-        listaCategorias.add(new Categoria(2, "Categoría 2"));
-        listaCategorias.add(new Categoria(3, "Categoría 3"));
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            DataMainActivity dataMainActivity = new DataMainActivity(null, requireContext());
+            listaCategorias = dataMainActivity.obtenerCategorias();
 
-        ArrayAdapter<Categoria> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, listaCategorias);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategoria.setAdapter(adapter);
+            new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
+                ArrayAdapter<Categoria> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, listaCategorias);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerCategoria.setAdapter(adapter);
+            });
+        });
     }
-
     private void agregarArticulo() {
         String idStr = etId.getText().toString().trim();
         String nombre = etNombre.getText().toString().trim();

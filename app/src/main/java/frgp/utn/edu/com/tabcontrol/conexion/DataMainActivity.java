@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
 import android.widget.Toast;
 import frgp.utn.edu.com.tabcontrol.adapter.ArticuloAdapter;
 import frgp.utn.edu.com.tabcontrol.clases.Articulo;
-
+import frgp.utn.edu.com.tabcontrol.clases.Categoria;
 
 
 public class DataMainActivity {
@@ -105,6 +105,32 @@ public class DataMainActivity {
                 }
             });
         });
+    }
+    public ArrayList<Categoria> obtenerCategorias() {
+        ArrayList<Categoria> categorias = new ArrayList<>();
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(DataDB.urlMySQL, DataDB.user, DataDB.pass);
+
+            String query = "SELECT id, descripcion FROM categoria";
+            PreparedStatement pst = con.prepareStatement(query);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String descripcion = rs.getString("descripcion");
+                categorias.add(new Categoria(id, descripcion));
+            }
+
+            rs.close();
+            pst.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return categorias;
     }
 
 
