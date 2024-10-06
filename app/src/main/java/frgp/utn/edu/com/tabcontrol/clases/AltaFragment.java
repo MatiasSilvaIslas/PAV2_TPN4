@@ -82,10 +82,23 @@ public class AltaFragment extends Fragment {
         String nombre = etNombre.getText().toString().trim();
         String stockStr = etStock.getText().toString().trim();
 
+        if (!nombre.matches("[a-zA-Z\\s]+")) {
+            Toast.makeText(getContext(), "El nombre solo puede contener letras", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int idc = Integer.parseInt(idStr);
+        DataMainActivity dataMainActivity = new DataMainActivity(null, requireContext());
+        boolean idExiste = dataMainActivity.articuloExiste(idc);
+
+        if (idExiste) {
+            Toast.makeText(getContext(), "El ID del artículo ya existe", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (!idStr.isEmpty() && !nombre.isEmpty() && !stockStr.isEmpty()) {
             int id = Integer.parseInt(idStr);
             int stock = Integer.parseInt(stockStr);
-            DataMainActivity dataMainActivity = new DataMainActivity(null, requireContext());
             dataMainActivity.agregarArticulo(id, nombre, stock, categoriaId);
             Toast.makeText(getContext(), "Artículo agregado", Toast.LENGTH_SHORT).show();
             clearFields();

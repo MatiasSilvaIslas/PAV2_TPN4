@@ -133,5 +133,84 @@ public class DataMainActivity {
         return categorias;
     }
 
+    public Articulo buscarArticuloPorId(int id) {
+        Articulo articulo = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(DataDB.urlMySQL, DataDB.user, DataDB.pass);
+
+            String query = "SELECT id, nombre, stock, idCategoria FROM articulo WHERE id = ?";
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                int articuloId = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                int stock = rs.getInt("stock");
+                int categoriaId = rs.getInt("idCategoria");
+
+                articulo = new Articulo(articuloId, nombre, stock, categoriaId);
+            }
+
+            rs.close();
+            pst.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return articulo;
+    }
+    public boolean modificarArticulo(int id, String nombre, int stock, int categoriaId) {
+        boolean success = false;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(DataDB.urlMySQL, DataDB.user, DataDB.pass);
+
+            String query = "UPDATE articulo SET nombre = ?, stock = ?, idCategoria = ? WHERE id = ?";
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, nombre);
+            pst.setInt(2, stock);
+            pst.setInt(3, categoriaId);
+            pst.setInt(4, id);
+
+            int rowsAffected = pst.executeUpdate();
+            success = rowsAffected > 0;
+
+            pst.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return success;
+    }
+
+    public boolean articuloExiste(int id) {
+        boolean existe = false;
+
+        String query = "SELECT id FROM articulo WHERE id = ?";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            try (Connection con = DriverManager.getConnection(DataDB.urlMySQL, DataDB.user, DataDB.pass);
+                 PreparedStatement pst = con.prepareStatement(query)) {
+
+                pst.setInt(1, id);
+                try (ResultSet rs = pst.executeQuery()) {
+                    if (rs.next()) {
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return existe;
+    }
+
 
 }
