@@ -10,9 +10,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-
-
 import android.widget.Toast;
 import frgp.utn.edu.com.tabcontrol.adapter.ArticuloAdapter;
 import frgp.utn.edu.com.tabcontrol.clases.Articulo;
@@ -23,7 +20,6 @@ public class DataMainActivity {
 
     private ListView lvArticulo;
     private Context context;
-
 
     public DataMainActivity(ListView lv, Context ct) {
         lvArticulo = lv;
@@ -53,6 +49,7 @@ public class DataMainActivity {
                 rs.close();
                 st.close();
                 con.close();
+
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(context, "Hay un problema", Toast.LENGTH_SHORT).show();
@@ -106,6 +103,7 @@ public class DataMainActivity {
             });
         });
     }
+
     public ArrayList<Categoria> obtenerCategorias() {
         ArrayList<Categoria> categorias = new ArrayList<>();
 
@@ -163,6 +161,7 @@ public class DataMainActivity {
 
         return articulo;
     }
+
     public boolean modificarArticulo(int id, String nombre, int stock, int categoriaId) {
         boolean success = false;
 
@@ -211,6 +210,5 @@ public class DataMainActivity {
 
         return existe;
     }
-
 
 }

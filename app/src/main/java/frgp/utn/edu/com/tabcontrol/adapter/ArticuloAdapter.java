@@ -5,10 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-
 import java.util.List;
-
-
 import android.widget.TextView;
 import frgp.utn.edu.com.tabcontrol.R;
 import frgp.utn.edu.com.tabcontrol.clases.Articulo;
@@ -33,8 +30,6 @@ public class ArticuloAdapter extends ArrayAdapter<Articulo> {
         tvnombre.setText("Articulo: "+getItem(position).getNombre());
         tvdni.setText("Stock: "+getItem(position).getStock()+"");
 
-
         return item;
-
     }
 }
