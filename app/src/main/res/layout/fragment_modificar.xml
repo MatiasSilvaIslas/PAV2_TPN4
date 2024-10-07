@@ -7,34 +7,16 @@
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/etId"
-        android:layout_width="246dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:hint="ID del Artículo"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnBuscar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="256dp"
-        android:text="Buscar"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp" />
-
-    <EditText
         android:id="@+id/etNombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginBottom="467dp"
         android:autofillHints=""
         android:hint="Nombre"
         android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnBuscar" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
     <EditText
         android:id="@+id/etStock"
@@ -65,4 +47,40 @@
         android:text="Modificar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerCategoria" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="368dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="39dp"
+        android:background="#C5C3C3"
+        android:backgroundTint="#C5C3C3"
+        app:layout_constraintBottom_toTopOf="@+id/etNombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/etId"
+            android:layout_width="246dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
+            android:hint="ID del Artículo"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnBuscar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="256dp"
+            android:text="Buscar"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="16dp" />
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
