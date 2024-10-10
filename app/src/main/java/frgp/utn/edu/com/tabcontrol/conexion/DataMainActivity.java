@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import android.widget.Toast;
@@ -43,6 +44,7 @@ public class DataMainActivity {
                     Articulo.setId(rs.getInt("id"));
                     Articulo.setNombre(rs.getString("nombre"));
                     Articulo.setStock(rs.getInt("stock"));
+                    Articulo.setCategoria(obtenerCategoriasById(rs.getInt("idCategoria")));
                     listaArticulo.add(Articulo);
                 }
 
@@ -130,6 +132,33 @@ public class DataMainActivity {
 
         return categorias;
     }
+    public Categoria obtenerCategoriasById(int id) {
+        Categoria categorias = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(DataDB.urlMySQL, DataDB.user, DataDB.pass);
+
+            String query = "SELECT id, descripcion FROM categoria where id = ?";
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+
+
+            if (rs.next()) {
+                categorias = new Categoria();
+                categorias.setId(rs.getInt("id"));
+                categorias.setDescripcion(rs.getString("descripcion"));
+            }
+            rs.close();
+            pst.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return categorias;
+    }
 
     public Articulo buscarArticuloPorId(int id) {
         Articulo articulo = null;
@@ -148,8 +177,8 @@ public class DataMainActivity {
                 String nombre = rs.getString("nombre");
                 int stock = rs.getInt("stock");
                 int categoriaId = rs.getInt("idCategoria");
-
-                articulo = new Articulo(articuloId, nombre, stock, categoriaId);
+                Categoria categoria = obtenerCategoriasById(categoriaId);
+                articulo = new Articulo(articuloId, nombre, stock, categoria);
             }
 
             rs.close();

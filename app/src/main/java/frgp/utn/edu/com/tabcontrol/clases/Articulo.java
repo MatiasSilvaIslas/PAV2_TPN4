@@ -7,15 +7,15 @@ public class Articulo implements Serializable {
     private int id;
     private String nombre;
     private int stock;
-    private int idCategoria;
-
+    //private int idCategoria;
+    private Categoria categoria;
     public Articulo() {}
 
-    public Articulo(int id, String nombre, int stock, int idCategoria) {
+    public Articulo(int id, String nombre, int stock, Categoria categoria) {
         this.id = id;
         this.nombre = nombre;
         this.stock = stock;
-        this.idCategoria = idCategoria;
+        this.categoria = categoria;
     }
 
 
@@ -43,11 +43,17 @@ public class Articulo implements Serializable {
         this.stock = stock;
     }
 
-    public int getIdCategoria() {
+    /*public int getIdCategoria() {
         return idCategoria;
     }
 
     public void setIdCategoria(int idCategoria) {
         this.idCategoria = idCategoria;
+    }*/
+    public Categoria getCategoria() {
+        return categoria;
+    }
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }

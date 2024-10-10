@@ -25,10 +25,13 @@ public class ArticuloAdapter extends ArrayAdapter<Articulo> {
         TextView tvid = (TextView) item.findViewById(R.id.idC);
         TextView tvdni = (TextView) item.findViewById(R.id.stock);
         TextView tvnombre = (TextView) item.findViewById(R.id.nombre);
+        TextView tvCategoria = (TextView) item.findViewById(R.id.catrgoriadesc);
 
         tvid.setText("Cod: "+getItem(position).getId()+"");
         tvnombre.setText("Articulo: "+getItem(position).getNombre());
         tvdni.setText("Stock: "+getItem(position).getStock()+"");
+        tvCategoria.setText("Categoria: "+getItem(position).getCategoria().toString()+"");
+
 
         return item;
     }

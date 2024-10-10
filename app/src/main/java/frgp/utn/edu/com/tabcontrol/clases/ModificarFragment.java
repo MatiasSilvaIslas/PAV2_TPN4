@@ -136,7 +136,7 @@ public class ModificarFragment extends Fragment {
                         etStock.setText(String.valueOf(articulo.getStock()));
 
                         for (int i = 0; i < listaCategorias.size(); i++) {
-                            if (listaCategorias.get(i).getId() == articulo.getIdCategoria()) {
+                            if (listaCategorias.get(i).getId() == articulo.getCategoria().getId()) {
                                 spinnerCategoria.setSelection(i);
                                 break;
                             }
